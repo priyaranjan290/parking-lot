@@ -38,12 +38,14 @@ public class ClientServiceImpl implements ClientService {
             System.out.println(PARKING_LOT_STATUS_HEADER);
 
             for (Slot slot : parkingLot.getSlots()) {
+
+                if (slot.getVehicle() == null) {continue;}
+
                 String format = String.format("%-11d %-18s %s",
                         slot.getId(),
                         slot.getVehicle() == null ? null : slot.getVehicle().getRegistrationNumber(),
                         slot.getVehicle() == null ? null : slot.getVehicle().getColor()
                 );
-
 
                 System.out.println(format);
             }
