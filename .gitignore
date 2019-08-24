@@ -1,0 +1,10 @@
+.DS_Store
+.gradle/
+.idea/
+ParkingLot-1.4.2.pdf
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+functional_spec/
+build/
