@@ -6,9 +6,12 @@ import com.goJek.models.*;
 
 public interface ParkingManager {
 
-    ParkingLot createParkingLot(int slots, SlotSize aDefault) throws ParkingException;
+    ParkingLot createParkingLot(int slots, SlotSize slotSize) throws ParkingException;
 
     Ticket parkVehicle(Vehicle vehicle) throws ParkingException;
 
     void unparkVehicle(int slotNum);
+
+    ParkingLot getParkingLot() throws ParkingException;
+
 }

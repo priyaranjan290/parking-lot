@@ -1,10 +1,8 @@
 package com.goJek;
 
 import com.goJek.enums.Commands;
-import com.goJek.enums.SlotSize;
-import com.goJek.models.*;
-import com.goJek.service.ParkingManager;
-import com.goJek.service.ParkingManagerImpl;
+import com.goJek.service.ClientService;
+import com.goJek.service.ClientServiceImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +15,6 @@ public class Application {
         Scanner scanner = null;
         if (args.length == 1) {
             // file input
-            System.out.println("Entering file mode...");
             File file = new File(args[0]);
             try {
                 scanner = new Scanner(file);
@@ -25,9 +22,7 @@ public class Application {
                 e.printStackTrace();
             }
         } else {
-
             // command line input
-            System.out.println("Entering command line mode...");
             scanner = new Scanner(System.in);
         }
 
@@ -40,7 +35,7 @@ public class Application {
 
     private static void readAndProcessInput(Scanner scanner) {
 
-        ParkingManager parkingManager = ParkingManagerImpl.getInstance();
+        ClientService clientService = ClientServiceImpl.getInstance();
 
         while (scanner.hasNextLine()) {
             String command = scanner.next();
@@ -52,50 +47,44 @@ public class Application {
 
                     case create_parking_lot:
                         Integer param = scanner.nextInt();
-                        ParkingLot parkingLot = parkingManager.createParkingLot(param.intValue(), SlotSize.DEFAULT);
-                        System.out.format("Created a parking lot with %d slots\n", parkingLot.getSlots().size());
+                        clientService.createParkingLot(param);
                         break;
 
                     case park:
                         String registrationNumber = scanner.next();
                         String color = scanner.next();
-                        Vehicle vehicle = new Car(registrationNumber, color);
-                        Ticket ticket = parkingManager.parkVehicle(vehicle);
-                        if (ticket == null) {
-                            System.out.println("Sorry, parking lot is full");
-                        } else {
-                            System.out.format("Allocated slot number: %d\n", ticket.getSlotId());
-                        }
+                        clientService.parkVehicle(registrationNumber, color);
                         break;
 
                     case leave:
                         Integer slotNum = scanner.nextInt();
-                        parkingManager.unparkVehicle(slotNum);
-                        System.out.format("Slot number %d is free\n", slotNum);
+                        clientService.leaveSlot(slotNum);
                         break;
 
                     case status:
+                        clientService.printStatus();
                         break;
 
                     case registration_numbers_for_cars_with_colour:
+                        clientService.printRegistrationNumbers(scanner.next());
                         break;
 
                     case slot_numbers_for_cars_with_colour:
+                        clientService.printSlotNumbersForColor(scanner.next());
                         break;
 
                     case slot_number_for_registration_number:
+                        clientService.printSlotNumbersForRegNumber(scanner.next());
                         break;
 
-                    case exit:
-                        System.out.println("Exit command found... exiting!");
-                        break;
+                    case exit: break;
 
                     default:
                         throw new Exception("Unsupported Command!!");
 
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
 
         }

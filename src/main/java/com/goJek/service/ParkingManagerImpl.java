@@ -50,7 +50,8 @@ public class ParkingManagerImpl implements ParkingManager {
         ticketService.closeTicket(slotNum, parkingLot.getId());
     }
 
-    private ParkingLot getParkingLot() throws ParkingException {
+
+    public ParkingLot getParkingLot() throws ParkingException {
 
         if (parkingLot == null) {
             throw new ParkingException("Parking lot is null!");
