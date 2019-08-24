@@ -5,6 +5,7 @@ import com.goJek.exception.ParkingException;
 import com.goJek.models.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -96,23 +97,15 @@ public class ClientServiceImpl implements ClientService {
             return;
         }
 
-        String result = "";
+        String collect = slots.stream()
+                .filter(x -> x.getVehicle() != null && x.getVehicle().getColor().equals(vehicleColor))
+                .map(y -> y.getVehicle().getRegistrationNumber())
+                .collect(Collectors.joining(", "));
 
-        for (int i=0; i<slots.size(); i++) {
-
-            Vehicle v = slots.get(i).getVehicle();
-
-            if (v == null || !v.getColor().equals(vehicleColor)) { continue;}
-
-            if (i == slots.size() - 1) {
-                result = result.concat(v.getRegistrationNumber());
-            }
-
-            result = result.concat(", ").concat(v.getRegistrationNumber());
-        }
-
-        if ("".equals(result)) {
+        if (collect == null || "".equals(collect)) {
             System.out.println(NOT_FOUND);
+        } else {
+            System.out.println(collect);
         }
 
     }
@@ -127,24 +120,17 @@ public class ClientServiceImpl implements ClientService {
             return;
         }
 
-        String result = "";
+        String collect = slots.stream()
+                .filter(x -> x.getVehicle() != null && x.getVehicle().getColor().equals(vehicleColor))
+                .map(y -> String.valueOf(y.getId()))
+                .collect(Collectors.joining(", "));
 
-        for (int i=0; i<slots.size(); i++) {
-
-            Vehicle v = slots.get(i).getVehicle();
-
-            if (v == null || !v.getColor().equals(vehicleColor)) { continue;}
-
-            if (i == slots.size() - 1) {
-                result = result.concat(String.valueOf(slots.get(i).getId()));
-            }
-
-            result = result.concat(", ").concat(String.valueOf(slots.get(i).getId()));
-        }
-
-        if ("".equals(result)) {
+        if (collect == null || "".equals(collect)) {
             System.out.println(NOT_FOUND);
+        } else {
+            System.out.println(collect);
         }
+
     }
 
     @Override
@@ -156,23 +142,15 @@ public class ClientServiceImpl implements ClientService {
             return;
         }
 
-        String result = "";
+        String collect = slots.stream()
+                .filter(x -> x.getVehicle() != null && x.getVehicle().getRegistrationNumber().equals(registrationNumber))
+                .map(y -> String.valueOf(y.getId()))
+                .collect(Collectors.joining(", "));
 
-        for (int i=0; i<slots.size(); i++) {
-
-            Vehicle v = slots.get(i).getVehicle();
-
-            if (v == null || !v.getRegistrationNumber().equals(registrationNumber)) { continue;}
-
-            if (i == slots.size() - 1) {
-                result = result.concat(String.valueOf(slots.get(i).getId()));
-            }
-
-            result = result.concat(", ").concat(String.valueOf(slots.get(i).getId()));
-        }
-
-        if ("".equals(result)) {
+        if (collect == null || "".equals(collect)) {
             System.out.println(NOT_FOUND);
+        } else {
+            System.out.println(collect);
         }
     }
 
