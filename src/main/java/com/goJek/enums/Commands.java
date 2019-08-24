@@ -1,4 +1,4 @@
-package com.goJek;
+package com.goJek.enums;
 
 public enum Commands {
 

@@ -1,5 +1,7 @@
 package com.goJek.models;
 
+import com.goJek.enums.SlotSize;
+
 public class Slot {
 
     private int id;
@@ -31,4 +33,6 @@ public class Slot {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
+    public void allocateVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
 }

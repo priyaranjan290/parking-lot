@@ -1,7 +1,8 @@
 package com.goJek;
 
-import com.goJek.models.ParkingLot;
-import com.goJek.models.SlotSize;
+import com.goJek.enums.Commands;
+import com.goJek.enums.SlotSize;
+import com.goJek.models.*;
 import com.goJek.service.ParkingManager;
 import com.goJek.service.ParkingManagerImpl;
 
@@ -33,8 +34,6 @@ public class Application {
 
         if (scanner != null) {
             readAndProcessInput(scanner);
-        } else {
-            System.out.println("");
         }
 
     }
@@ -60,6 +59,13 @@ public class Application {
                     case park:
                         String registrationNumber = scanner.next();
                         String color = scanner.next();
+                        Vehicle vehicle = new Car(registrationNumber, color);
+                        Ticket ticket = parkingManager.parkVehicle(vehicle);
+                        if (ticket == null) {
+                            System.out.println("Sorry, parking lot is full");
+                        } else {
+                            System.out.format("Allocated slot number: %d", ticket.getSlot().getId());
+                        }
                         break;
 
                     case leave:

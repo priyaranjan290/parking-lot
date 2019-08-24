@@ -1,5 +1,6 @@
 package com.goJek.models;
 
+import com.goJek.enums.VehicleType;
 import com.goJek.exception.ParkingException;
 
 public class Car extends Vehicle {

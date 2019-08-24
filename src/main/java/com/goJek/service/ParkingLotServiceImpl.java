@@ -4,14 +4,15 @@ package com.goJek.service;
 import com.goJek.exception.ParkingException;
 import com.goJek.models.ParkingLot;
 import com.goJek.models.Slot;
-import com.goJek.models.SlotSize;
+import com.goJek.enums.SlotSize;
 
 import java.util.List;
 
 public class ParkingLotServiceImpl implements ParkingLotService {
 
     private static ParkingLotService parkingLotService;
-    private static SlotService slotService = SlotServiceImpl.getInstance();
+
+    private SlotService slotService = SlotServiceImpl.getInstance();
 
     public static ParkingLotService getInstance() {
         if (parkingLotService == null) {
