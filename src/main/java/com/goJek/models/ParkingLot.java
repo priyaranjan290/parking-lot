@@ -7,14 +7,11 @@ public class ParkingLot {
     private int id;
     private List<Slot> slots;
 
-    private int currOccupiedSlotIndex;
-
     private static int nextParkingLotId = 1;
 
     public ParkingLot(List<Slot> slots) {
         this.id = ParkingLot.nextParkingLotId;
         this.slots = slots;
-        this.currOccupiedSlotIndex = -1;
 
         ParkingLot.nextParkingLotId = ParkingLot.nextParkingLotId + 1;
     }
@@ -29,8 +26,10 @@ public class ParkingLot {
     }
 
     private Slot getNextAvailableSlot() {
-        if (currOccupiedSlotIndex + 1 < slots.size()) {
-            return slots.get(currOccupiedSlotIndex + 1);
+        for (Slot slot : slots) {
+            if (!slot.isSlotOccupied()) {
+                return slot;
+            }
         }
 
         return null;
@@ -45,12 +44,15 @@ public class ParkingLot {
         return false;
     }
 
-
     public Slot parkVehicle(Vehicle vehicle) {
         Slot slot = getNextAvailableSlot();
         slot.allocateVehicle(vehicle);
-
-        currOccupiedSlotIndex = currOccupiedSlotIndex + 1;
         return slot;
+    }
+
+    public boolean unPark(Integer slotNum) {
+        Slot slot = getSlots().get(slotNum - 1);
+        slot.deAllocateVehicle();
+        return true;
     }
 }

@@ -35,4 +35,6 @@ public class Slot {
     }
 
     public void allocateVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
+
+    public void deAllocateVehicle() { this.vehicle = null; }
 }

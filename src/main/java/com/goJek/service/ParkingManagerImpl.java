@@ -40,8 +40,14 @@ public class ParkingManagerImpl implements ParkingManager {
 
         Slot slot = parkingLot.parkVehicle(vehicle);
 
-        return ticketService.createTicket(slot, parkingLot.getId());
+        return ticketService.createTicket(vehicle.getRegistrationNumber(), slot.getId(), parkingLot.getId());
 
+    }
+
+    @Override
+    public void unparkVehicle(int slotNum) {
+        parkingLot.unPark(slotNum);
+        ticketService.closeTicket(slotNum, parkingLot.getId());
     }
 
     private ParkingLot getParkingLot() throws ParkingException {

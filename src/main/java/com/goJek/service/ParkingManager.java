@@ -9,4 +9,6 @@ public interface ParkingManager {
     ParkingLot createParkingLot(int slots, SlotSize aDefault) throws ParkingException;
 
     Ticket parkVehicle(Vehicle vehicle) throws ParkingException;
+
+    void unparkVehicle(int slotNum);
 }

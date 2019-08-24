@@ -53,7 +53,7 @@ public class Application {
                     case create_parking_lot:
                         Integer param = scanner.nextInt();
                         ParkingLot parkingLot = parkingManager.createParkingLot(param.intValue(), SlotSize.DEFAULT);
-                        System.out.format("Created a parking lot with %d slots", parkingLot.getSlots().size());
+                        System.out.format("Created a parking lot with %d slots\n", parkingLot.getSlots().size());
                         break;
 
                     case park:
@@ -64,11 +64,14 @@ public class Application {
                         if (ticket == null) {
                             System.out.println("Sorry, parking lot is full");
                         } else {
-                            System.out.format("Allocated slot number: %d", ticket.getSlot().getId());
+                            System.out.format("Allocated slot number: %d\n", ticket.getSlotId());
                         }
                         break;
 
                     case leave:
+                        Integer slotNum = scanner.nextInt();
+                        parkingManager.unparkVehicle(slotNum);
+                        System.out.format("Slot number %d is free\n", slotNum);
                         break;
 
                     case status:
