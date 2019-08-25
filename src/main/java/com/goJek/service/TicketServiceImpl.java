@@ -59,6 +59,17 @@ public class TicketServiceImpl implements TicketService {
 
     /**
      *
+     * Get all tickets currently present
+     *
+     * @return : list of all tickets
+     */
+    @Override
+    public List<Ticket> getAllTickets() {
+        return this.allTickets;
+    }
+
+    /**
+     *
      * Search an "open ticket" for the given slot id and parking lot id
      *
      * @param slotId       :  id of the slot
