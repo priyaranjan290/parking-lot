@@ -10,7 +10,7 @@ public class TicketServiceImpl implements TicketService {
 
     private static TicketService ticketService;
 
-    public List<Ticket> allTickets = new ArrayList<>();
+    private TicketServiceImpl() {}
 
     public static TicketService getInstance() {
         if (ticketService == null) {
@@ -20,7 +20,21 @@ public class TicketServiceImpl implements TicketService {
         return ticketService;
     }
 
+    /**
+     * Holds the entire list of tickets created.
+     */
+    public List<Ticket> allTickets = new ArrayList<>();
 
+
+    /**
+     *
+     * Issues a new ticket when a new vehicle is parked to a specific location [slot and parking lot]
+     *
+     * @param registrationNumber    : registration  number of the vehicle
+     * @param slotId                : id of the slot
+     * @param parkingLotId          : id of the parking lot
+     * @return                      : Ticket
+     */
     @Override
     public Ticket createTicket(String registrationNumber, int slotId, int parkingLotId) {
         Ticket ticket = new Ticket(registrationNumber, slotId, parkingLotId);
@@ -28,17 +42,32 @@ public class TicketServiceImpl implements TicketService {
         return ticket;
     }
 
+    /**
+     *
+     * closes the ticket issued for the given location
+     *
+     * @param slotId       :  id of the slot
+     * @param parkingLotId :  id of the parking lot
+     */
     @Override
-    public void closeTicket(int slotNum, int parkingLotId) {
-        Ticket openTicket = getOpenTicket(slotNum, parkingLotId);
+    public void closeTicket(int slotId, int parkingLotId) {
+        Ticket openTicket = getOpenTicket(slotId, parkingLotId);
         if (openTicket != null) {
             openTicket.closeTicket();
         }
     }
 
-    private Ticket getOpenTicket(int slotNum, int parkingLotId) {
+    /**
+     *
+     * Search an "open ticket" for the given slot id and parking lot id
+     *
+     * @param slotId       :  id of the slot
+     * @param parkingLotId :  id of the parking lot
+     * @return             :  Ticket if found; else null
+     */
+    private Ticket getOpenTicket(int slotId, int parkingLotId) {
         for (Ticket ticket : allTickets) {
-            if (ticket.getSlotId() == slotNum && ticket.getparkingLotId() == parkingLotId && ticket.getEndTimestamp() == -1) {
+            if (ticket.getSlotId() == slotId && ticket.getparkingLotId() == parkingLotId && ticket.getEndTimestamp() == -1) {
                 return ticket;
             }
         }

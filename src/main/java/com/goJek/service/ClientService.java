@@ -1,5 +1,9 @@
 package com.goJek.service;
 
+
+/**
+ * defines the interface which interacts with the system and produces output in desired format
+ * */
 public interface ClientService {
     void printStatus();
 

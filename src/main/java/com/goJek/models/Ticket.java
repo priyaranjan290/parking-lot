@@ -18,7 +18,7 @@ public class Ticket {
 
     // stores time duration for which the vehicle was parked -> can be used for billing during exit
     private long startTimestamp;
-    private long endTimestamp;
+    private long endTimestamp;          // initally value is -1 => denotes that the ticket is in open state
 
     // id generator for the class
     private static int nextAvailableId = 1;

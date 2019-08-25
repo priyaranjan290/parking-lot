@@ -11,6 +11,9 @@ public class SlotServiceImpl implements SlotService {
 
     private static SlotService slotService;
 
+    private SlotServiceImpl() {}
+
+    // error message to throw in case invalid slot capacity is specified while creation
     private static final String INVALID_SLOT_CAPACITY = "Invalid slot capacity supplied!";
 
     public static SlotService getInstance() {
@@ -21,6 +24,15 @@ public class SlotServiceImpl implements SlotService {
         return slotService;
     }
 
+    /**
+     *
+     * create a list of slots for the parking lot
+     *
+     * @param size          : capacity
+     * @param slotSize      : type of slots to be created
+     * @return
+     * @throws ParkingException
+     */
     @Override
     public List<Slot> createSlots(int size, SlotSize slotSize) throws ParkingException {
         if (size < 0) {

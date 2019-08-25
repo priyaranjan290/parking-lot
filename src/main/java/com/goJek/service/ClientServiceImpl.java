@@ -11,6 +11,8 @@ public class ClientServiceImpl implements ClientService {
 
     private static ClientService clientService;
 
+    private ClientServiceImpl() {}
+
     private ParkingManager parkingManager = ParkingManagerImpl.getInstance();
 
     public static ClientService getInstance() {
@@ -22,6 +24,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     * Various Response Formats as Needed by the client
+     * */
     public static final String PARKING_LOT_CREATION_RESPONSE = "Created a parking lot with %s slots";
     public static final String PARK_VEHICLE_RESPONSE = "Allocated slot number: %s";
     public static final String PARKING_LOT_FULL_RESPONSE =  "Sorry, parking lot is full";
@@ -30,6 +35,11 @@ public class ClientServiceImpl implements ClientService {
     public static final String NOT_FOUND = "Not found";
 
 
+    /**
+     * Fetch slots and prints the current status of the parking lot.
+     * Skips slots info which are unoccupied
+     *
+     * */
     @Override
     public void printStatus() {
         try {
@@ -54,6 +64,10 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    /**
+     * invokes unpark vehicle from parking manager.
+     * prints the result
+     * */
     @Override
     public void leaveSlot(Integer slotNum) {
         try {
@@ -66,6 +80,10 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    /**
+     * invokes parkVehicle from parking manager.
+     * prints the result
+     * */
     @Override
     public void parkVehicle(String registrationNumber, String color) {
         try {
@@ -83,6 +101,11 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+
+    /**
+     * invokes createParkingLot from parking manager.
+     * prints the result
+     * */
     @Override
     public void createParkingLot(int slots) {
         ParkingLot parkingLot = null;
@@ -95,6 +118,14 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+
+    /**
+     *
+     * Fetch all slots, filters result and prints the comma separated registration number of vehicles of the given color
+     *
+     * @param vehicleColor -- color to be searched for
+     *
+     * */
     @Override
     public void printRegistrationNumbers(String vehicleColor) {
         List<Slot> slots = getSlots();
@@ -118,6 +149,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     *
+     * Fetch result, and prints the comma separated slot number of vehicles of the given color
+     *
+     * @param vehicleColor -- color to be searched for
+     *
+     * */
     @Override
     public void printSlotNumbersForColor(String vehicleColor) {
         List<Slot> slots = getSlots();
@@ -140,6 +178,14 @@ public class ClientServiceImpl implements ClientService {
 
     }
 
+
+    /**
+     * Searches for the desired slot in the given list of slots for a particular vehicle reg number
+     * If found, prints the slot number ; else prints NOT_FOUND
+     *
+     * @param registrationNumber -- registration number of the vehicle to be searched for
+     *
+     * */
     @Override
     public void printSlotNumbersForRegNumber(String registrationNumber) {
         List<Slot> slots = getSlots();
@@ -161,6 +207,10 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+
+    /**
+     * @return List of Slot in the present parking lot
+     * */
     private List<Slot> getSlots() {
         try {
             ParkingLot parkingLot = parkingManager.getParkingLot();
