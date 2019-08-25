@@ -50,15 +50,20 @@ public class ClientServiceImpl implements ClientService {
                 System.out.println(format);
             }
         } catch (ParkingException e) {
-            e.printStackTrace();
+
         }
     }
 
     @Override
     public void leaveSlot(Integer slotNum) {
-        parkingManager.unparkVehicle(slotNum);
-        String format = String.format(LEAVE_SLOT_RESPOSNE, slotNum);
-        System.out.println(format);
+        try {
+            if (parkingManager.unparkVehicle(slotNum)) {
+                String format = String.format(LEAVE_SLOT_RESPOSNE, slotNum);
+                System.out.println(format);
+            }
+        } catch (ParkingException e) {
+
+        }
     }
 
     @Override

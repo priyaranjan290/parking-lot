@@ -35,9 +35,10 @@ public class Application {
 
     private static void readAndProcessInput(Scanner scanner) {
 
+        boolean exit = false;
         ClientService clientService = ClientServiceImpl.getInstance();
 
-        while (scanner.hasNextLine()) {
+        while (scanner.hasNextLine() && !exit) {
             String command = scanner.next();
 
             Commands currentCommand = Commands.valueOf(command);
@@ -77,7 +78,9 @@ public class Application {
                         clientService.printSlotNumbersForRegNumber(scanner.next());
                         break;
 
-                    case exit: break;
+                    case exit:
+                        exit = true;
+                        break;
 
                     default:
                         throw new Exception("Unsupported Command!!");

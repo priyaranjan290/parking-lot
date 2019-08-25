@@ -10,7 +10,7 @@ public interface ParkingManager {
 
     Ticket parkVehicle(Vehicle vehicle) throws ParkingException;
 
-    void unparkVehicle(int slotNum);
+    boolean unparkVehicle(int slotNum) throws ParkingException;
 
     ParkingLot getParkingLot() throws ParkingException;
 

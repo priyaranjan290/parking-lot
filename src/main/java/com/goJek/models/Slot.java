@@ -30,9 +30,6 @@ public class Slot {
         return this.vehicle != null;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
 
     public void allocateVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
 

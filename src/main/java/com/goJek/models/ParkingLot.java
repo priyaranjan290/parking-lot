@@ -1,5 +1,7 @@
 package com.goJek.models;
 
+import com.goJek.exception.ParkingException;
+
 import java.util.List;
 
 public class ParkingLot {
@@ -46,12 +48,27 @@ public class ParkingLot {
 
     public Slot parkVehicle(Vehicle vehicle) {
         Slot slot = getNextAvailableSlot();
+
+        if (slot == null) {
+            return null;
+        }
+
         slot.allocateVehicle(vehicle);
         return slot;
     }
 
-    public boolean unPark(Integer slotNum) {
+    public boolean unPark(int slotNum) throws ParkingException {
+
+        if (slotNum > getSlots().size() && slotNum < 1) {
+            return false;
+        }
+
         Slot slot = getSlots().get(slotNum - 1);
+
+        if (!slot.isSlotOccupied()) {
+            throw new ParkingException("Slot is already Empty!");
+        }
+
         slot.deAllocateVehicle();
         return true;
     }
