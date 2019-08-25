@@ -100,7 +100,7 @@ public class ParkingLot {
      * */
     public boolean unPark(int slotNum) throws ParkingException {
 
-        if (slotNum > getSlots().size() && slotNum < 1) {
+        if (slotNum > getSlots().size() || slotNum < 1) {
             return false;
         }
 
