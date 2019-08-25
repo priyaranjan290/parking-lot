@@ -1,21 +1,25 @@
 package com.goJek.service;
 
 
+import java.util.List;
+
 /**
  * defines the interface which interacts with the system and produces output in desired format
  * */
 public interface ClientService {
-    void printStatus();
+    List<String> getData();
 
-    void leaveSlot(Integer slotNum);
+    List<String> leaveSlot(Integer slotNum);
 
-    void parkVehicle(String registrationNumber, String color);
+    List<String> parkVehicle(String registrationNumber, String color);
 
-    void createParkingLot(int slots);
+    List<String> createParkingLot(int slots);
 
-    void printRegistrationNumbers(String vehicleColor);
+    List<String> getFormattedRegNumForCarsWithColor(String vehicleColor);
 
-    void printSlotNumbersForColor(String vehicleColor);
+    List<String> getFormattedSlotNumbersWithColor(String vehicleColor);
 
-    void printSlotNumbersForRegNumber(String registrationNumber);
+    List<String> getSlotNumberForRegNumber(String registrationNumber);
+
+    void printData(List<String> dataList);
 }

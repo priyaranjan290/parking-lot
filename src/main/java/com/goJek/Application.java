@@ -62,34 +62,34 @@ public class Application {
 
                     case CREATE_PARKING_LOT:
                         Integer param = scanner.nextInt();
-                        clientService.createParkingLot(param);
+                        clientService.printData(clientService.createParkingLot(param));
                         break;
 
                     case PARK:
                         String registrationNumber = scanner.next();
                         String color = scanner.next();
-                        clientService.parkVehicle(registrationNumber, color);
+                        clientService.printData(clientService.parkVehicle(registrationNumber, color));
                         break;
 
                     case LEAVE:
                         Integer slotNum = scanner.nextInt();
-                        clientService.leaveSlot(slotNum);
+                        clientService.printData(clientService.leaveSlot(slotNum));
                         break;
 
                     case STATUS:
-                        clientService.printStatus();
+                        clientService.printData(clientService.getData());
                         break;
 
                     case REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR:
-                        clientService.printRegistrationNumbers(scanner.next());
+                        clientService.printData(clientService.getFormattedRegNumForCarsWithColor(scanner.next()));
                         break;
 
                     case SLOT_NUMBERS_FOR_CARS_WITH_COLOUR:
-                        clientService.printSlotNumbersForColor(scanner.next());
+                        clientService.printData(clientService.getFormattedSlotNumbersWithColor(scanner.next()));
                         break;
 
                     case SLOT_NUMBER_FOR_REGISTRATION_NUMBER:
-                        clientService.printSlotNumbersForRegNumber(scanner.next());
+                        clientService.printData(clientService.getSlotNumberForRegNumber(scanner.next()));
                         break;
 
                     case EXIT:

@@ -4,6 +4,7 @@ import com.goJek.enums.SlotSize;
 import com.goJek.exception.ParkingException;
 import com.goJek.models.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,133 +37,145 @@ public class ClientServiceImpl implements ClientService {
 
 
     /**
-     * Fetch slots and prints the current status of the parking lot.
+     * Fetch slots and current status of the parking lot.
      * Skips slots info which are unoccupied
      *
+     * @return return list of formatted strings
      * */
     @Override
-    public void printStatus() {
+    public List<String> getData() {
+        List<String> retVal = new ArrayList<>();
         try {
+            List<String> data = new ArrayList<>();
             ParkingLot parkingLot = parkingManager.getParkingLot();
-
-            System.out.println(PARKING_LOT_STATUS_HEADER);
-
             for (Slot slot : parkingLot.getSlots()) {
-
                 if (slot.getVehicle() == null) {continue;}
-
                 String format = String.format("%-11d %-18s %s",
                         slot.getId(),
                         slot.getVehicle() == null ? null : slot.getVehicle().getRegistrationNumber(),
-                        slot.getVehicle() == null ? null : slot.getVehicle().getColor()
-                );
+                        slot.getVehicle() == null ? null : slot.getVehicle().getColor());
 
-                System.out.println(format);
+                data.add(format);
             }
+            retVal.add(PARKING_LOT_STATUS_HEADER);
+            retVal.addAll(data);
+
         } catch (ParkingException e) {
-            System.out.println(e.getMessage());
+            retVal.add(e.getMessage());
         }
+        return retVal;
     }
+
 
     /**
      * invokes unpark vehicle from parking manager.
-     * prints the result
+     *
+     * @return return list of formatted strings
      * */
     @Override
-    public void leaveSlot(Integer slotNum) {
+    public List<String> leaveSlot(Integer slotNum) {
+        List<String> retVal = new ArrayList<>();
         try {
             if (parkingManager.unparkVehicle(slotNum)) {
                 String format = String.format(LEAVE_SLOT_RESPOSNE, slotNum);
-                System.out.println(format);
+                retVal.add(format);
             }
         } catch (ParkingException e) {
-            System.out.println(e.getMessage());
+            retVal.add(e.getMessage());
         }
+        return retVal;
     }
 
     /**
      * invokes parkVehicle from parking manager.
-     * prints the result
+     *
+     * @return return list of formatted strings
      * */
     @Override
-    public void parkVehicle(String registrationNumber, String color) {
+    public List<String> parkVehicle(String registrationNumber, String color) {
+        List<String> retVal = new ArrayList<>();
         try {
-
             Vehicle vehicle = new Car(registrationNumber, color);
             Ticket ticket = parkingManager.parkVehicle(vehicle);
 
             if (ticket == null) {
-                System.out.println(PARKING_LOT_FULL_RESPONSE);
+                retVal.add(PARKING_LOT_FULL_RESPONSE);
             } else {
-                System.out.println(String.format(PARK_VEHICLE_RESPONSE, ticket.getSlotId()));
+                retVal.add(String.format(PARK_VEHICLE_RESPONSE, ticket.getSlotId()));
             }
         } catch (ParkingException e) {
-            System.out.println(e.getMessage());
+            retVal.add(e.getMessage());
         }
+        return retVal;
     }
 
 
     /**
      * invokes createParkingLot from parking manager.
-     * prints the result
+     *
+     * @return return list of formatted strings
      * */
     @Override
-    public void createParkingLot(int slots) {
+    public List<String> createParkingLot(int slots) {
+        List<String> retVal = new ArrayList<>();
         ParkingLot parkingLot = null;
         try {
             parkingLot = parkingManager.createParkingLot(slots, SlotSize.DEFAULT);
             String format = String.format(PARKING_LOT_CREATION_RESPONSE, parkingLot.getSlots().size());
-            System.out.println(format);
+            retVal.add(format);
         } catch (ParkingException e) {
-            System.out.println(e.getMessage());
+            retVal.add(e.getMessage());
         }
+        return retVal;
     }
 
 
     /**
      *
-     * Fetch all slots, filters result and prints the comma separated registration number of vehicles of the given color
-     *
-     * @param vehicleColor -- color to be searched for
+     * Fetch all slots, filters result
+     *  @param vehicleColor -- color to be searched for
+     *  @return : list of strings with comma separated registration number of vehicles of the given color
      *
      * */
     @Override
-    public void printRegistrationNumbers(String vehicleColor) {
-        List<Slot> slots = getSlots();
+    public List<String> getFormattedRegNumForCarsWithColor(String vehicleColor) {
+        List<String> retVal = new ArrayList<>();
 
+        List<Slot> slots = getSlots();
         if (slots == null) {
-            System.out.println(NOT_FOUND);
-            return;
+            retVal.add(NOT_FOUND);
+            return retVal;
         }
 
-        String collect = slots.stream()
+        String fromatedRegString = slots.stream()
                 .filter(x -> x.getVehicle() != null && x.getVehicle().getColor().equals(vehicleColor))
                 .map(y -> y.getVehicle().getRegistrationNumber())
                 .collect(Collectors.joining(", "));
 
-        if (collect == null || "".equals(collect)) {
-            System.out.println(NOT_FOUND);
+        if (fromatedRegString == null || "".equals(fromatedRegString)) {
+            retVal.add(NOT_FOUND);
         } else {
-            System.out.println(collect);
+            retVal.add(fromatedRegString);
         }
 
+        return retVal;
     }
 
 
     /**
      *
-     * Fetch result, and prints the comma separated slot number of vehicles of the given color
-     *
-     * @param vehicleColor -- color to be searched for
-     *
+     * Fetch result,
+     *  @param vehicleColor -- color to be searched for
+     *  @return return list of formatted strings [comma separated slot number of vehicles of the given color]
      * */
     @Override
-    public void printSlotNumbersForColor(String vehicleColor) {
-        List<Slot> slots = getSlots();
+    public List<String> getFormattedSlotNumbersWithColor(String vehicleColor) {
+        List<String> retVal = new ArrayList<>();
 
+        List<Slot> slots = getSlots();
         if (slots == null) {
-            System.out.println(NOT_FOUND);
-            return;
+            retVal.add(NOT_FOUND);
+            return retVal;
         }
 
         String collect = slots.stream()
@@ -171,28 +184,29 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.joining(", "));
 
         if (collect == null || "".equals(collect)) {
-            System.out.println(NOT_FOUND);
+            retVal.add(NOT_FOUND);
         } else {
-            System.out.println(collect);
+            retVal.add(collect);
         }
 
+        return retVal;
     }
 
 
     /**
      * Searches for the desired slot in the given list of slots for a particular vehicle reg number
-     * If found, prints the slot number ; else prints NOT_FOUND
      *
-     * @param registrationNumber -- registration number of the vehicle to be searched for
-     *
+     *  @param registrationNumber -- registration number of the vehicle to be searched for
+     *  @return : list of formatted string containing output
      * */
     @Override
-    public void printSlotNumbersForRegNumber(String registrationNumber) {
-        List<Slot> slots = getSlots();
+    public List<String> getSlotNumberForRegNumber(String registrationNumber) {
+        List<String> retVal = new ArrayList<>();
 
+        List<Slot> slots = getSlots();
         if (slots == null) {
-            System.out.println(NOT_FOUND);
-            return;
+            retVal.add(NOT_FOUND);
+            return retVal;
         }
 
         String collect = slots.stream()
@@ -201,10 +215,11 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.joining(", "));
 
         if (collect == null || "".equals(collect)) {
-            System.out.println(NOT_FOUND);
+            retVal.add(NOT_FOUND);
         } else {
-            System.out.println(collect);
+            retVal.add(collect);
         }
+        return retVal;
     }
 
 
@@ -219,5 +234,16 @@ public class ClientServiceImpl implements ClientService {
 
         }
         return null;
+    }
+
+
+    /**
+     * prints the data present in the param
+     * @param dataList
+     */
+    public void printData(List<String> dataList) {
+        for (String data : dataList) {
+            System.out.println(data);
+        }
     }
 }
