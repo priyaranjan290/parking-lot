@@ -14,6 +14,7 @@ public class ParkingManagerImpl implements ParkingManager {
 
     private ParkingLot parkingLot;
 
+    private static final String PARKING_LOT_IS_NULL = "Parking lot is null!";
 
     public static ParkingManager getInstance() {
         if (parkingManager == null) {
@@ -60,7 +61,7 @@ public class ParkingManagerImpl implements ParkingManager {
     public ParkingLot getParkingLot() throws ParkingException {
 
         if (parkingLot == null) {
-            throw new ParkingException("Parking lot is null!");
+            throw new ParkingException(PARKING_LOT_IS_NULL);
         }
 
         return parkingLot;

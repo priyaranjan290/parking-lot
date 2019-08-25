@@ -11,6 +11,8 @@ public class SlotServiceImpl implements SlotService {
 
     private static SlotService slotService;
 
+    private static final String INVALID_SLOT_CAPACITY = "Invalid slot capacity supplied!";
+
     public static SlotService getInstance() {
         if (slotService == null) {
             slotService = new SlotServiceImpl();
@@ -22,7 +24,7 @@ public class SlotServiceImpl implements SlotService {
     @Override
     public List<Slot> createSlots(int size, SlotSize slotSize) throws ParkingException {
         if (size < 0) {
-            throw new ParkingException("invalid slot size!");
+            throw new ParkingException(INVALID_SLOT_CAPACITY);
         }
 
         List<Slot> retVal = new ArrayList<>();

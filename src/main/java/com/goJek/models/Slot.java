@@ -1,12 +1,15 @@
 package com.goJek.models;
 
 import com.goJek.enums.SlotSize;
+import com.goJek.exception.ParkingException;
 
 public class Slot {
 
     private int id;
     private Vehicle vehicle;
     private SlotSize slotSize;
+
+    private static final String SLOT_IS_ALREADY_EMPTY = "Slot is already Empty!";
 
     public Slot(int slotNumber, SlotSize slotSize) {
         this.id  = slotNumber;
@@ -33,5 +36,10 @@ public class Slot {
 
     public void allocateVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
 
-    public void deAllocateVehicle() { this.vehicle = null; }
+    public void deAllocateVehicle() throws ParkingException {
+        if (!this.isSlotOccupied()) {
+            throw new ParkingException(SLOT_IS_ALREADY_EMPTY);
+        }
+        this.vehicle = null;
+    }
 }

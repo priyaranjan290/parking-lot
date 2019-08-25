@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class Application {
 
+    private static final String UNSUPPORTED_COMMAND = "Unsupported Command!!";
+
     public static void main(String[] args) {
 
         Scanner scanner = null;
@@ -41,9 +43,10 @@ public class Application {
         while (scanner.hasNextLine() && !exit) {
             String command = scanner.next();
 
-            Commands currentCommand = Commands.valueOf(command.toUpperCase());
-
             try {
+
+                Commands currentCommand = Commands.valueOf(command.toUpperCase());
+
                 switch (currentCommand) {
 
                     case CREATE_PARKING_LOT:
@@ -83,11 +86,13 @@ public class Application {
                         break;
 
                     default:
-                        throw new Exception("Unsupported Command!!");
+                        throw new Exception(UNSUPPORTED_COMMAND);
 
                 }
+            } catch (IllegalArgumentException e) {
+                System.out.println(UNSUPPORTED_COMMAND);
             } catch (Exception e) {
-
+                System.out.println(e.getMessage());
             }
 
         }

@@ -64,11 +64,6 @@ public class ParkingLot {
         }
 
         Slot slot = getSlots().get(slotNum - 1);
-
-        if (!slot.isSlotOccupied()) {
-            throw new ParkingException("Slot is already Empty!");
-        }
-
         slot.deAllocateVehicle();
         return true;
     }

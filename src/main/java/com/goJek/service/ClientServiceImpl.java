@@ -50,7 +50,7 @@ public class ClientServiceImpl implements ClientService {
                 System.out.println(format);
             }
         } catch (ParkingException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class ClientServiceImpl implements ClientService {
                 System.out.println(format);
             }
         } catch (ParkingException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class ClientServiceImpl implements ClientService {
                 System.out.println(String.format(PARK_VEHICLE_RESPONSE, ticket.getSlotId()));
             }
         } catch (ParkingException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class ClientServiceImpl implements ClientService {
             String format = String.format(PARKING_LOT_CREATION_RESPONSE, parkingLot.getSlots().size());
             System.out.println(format);
         } catch (ParkingException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
