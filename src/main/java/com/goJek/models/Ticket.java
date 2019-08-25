@@ -59,6 +59,10 @@ public class Ticket {
         return endTimestamp;
     }
 
+    public String getVehicleRegistrationNumber() {
+        return vehicleRegistrationNumber;
+    }
+
 
     /**
      * called when the vehicle is unparked
@@ -66,4 +70,6 @@ public class Ticket {
     public void closeTicket() {
         this.endTimestamp = System.currentTimeMillis();
     }
+
+
 }
