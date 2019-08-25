@@ -25,19 +25,18 @@ public class Application {
             File file = new File(args[0]);
             try {
                 scanner = new Scanner(file);
+                readAndProcessInput(scanner);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        } else {
-            // command line input
-            scanner = new Scanner(System.in);
         }
 
+        // command line input
+        scanner = new Scanner(System.in);
 
         if (scanner != null) {
             readAndProcessInput(scanner);
         }
-
     }
 
 
@@ -48,10 +47,9 @@ public class Application {
      * */
     private static void readAndProcessInput(Scanner scanner) {
 
-        boolean exit = false;
         ClientService clientService = ClientServiceImpl.getInstance();
 
-        while (scanner.hasNextLine() && !exit) {
+        while (scanner.hasNextLine()) {
             String command = scanner.next();
 
             try {
@@ -93,8 +91,7 @@ public class Application {
                         break;
 
                     case EXIT:
-                        exit = true;
-                        break;
+                        System.exit(0);
 
                     default:
                         throw new ParkingException(UNSUPPORTED_COMMAND);

@@ -112,6 +112,10 @@ public class ParkingManagerImpl implements ParkingManager {
      */
     @Override
     public boolean unparkVehicle(int slotNum) throws ParkingException {
+        if (parkingLot == null) {
+            throw new ParkingException(PARKING_LOT_IS_NULL);
+        }
+
         boolean isVehicleUnparked = parkingLot.unPark(slotNum);
         if (isVehicleUnparked) {
             ticketService.closeTicket(slotNum, parkingLot.getId());

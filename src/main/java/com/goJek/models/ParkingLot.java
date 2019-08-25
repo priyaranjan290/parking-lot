@@ -28,6 +28,8 @@ public class ParkingLot {
     }
 
 
+    private static final String INVALID_SLOT = "Invalid Slot!";
+
     /**
      * Getter methods for class fields
      * */
@@ -101,7 +103,7 @@ public class ParkingLot {
     public boolean unPark(int slotNum) throws ParkingException {
 
         if (slotNum > getSlots().size() || slotNum < 1) {
-            return false;
+            throw new ParkingException(INVALID_SLOT);
         }
 
         Slot slot = getSlots().get(slotNum - 1);
