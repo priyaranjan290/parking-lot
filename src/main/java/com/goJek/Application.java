@@ -41,44 +41,44 @@ public class Application {
         while (scanner.hasNextLine() && !exit) {
             String command = scanner.next();
 
-            Commands currentCommand = Commands.valueOf(command);
+            Commands currentCommand = Commands.valueOf(command.toUpperCase());
 
             try {
                 switch (currentCommand) {
 
-                    case create_parking_lot:
+                    case CREATE_PARKING_LOT:
                         Integer param = scanner.nextInt();
                         clientService.createParkingLot(param);
                         break;
 
-                    case park:
+                    case PARK:
                         String registrationNumber = scanner.next();
                         String color = scanner.next();
                         clientService.parkVehicle(registrationNumber, color);
                         break;
 
-                    case leave:
+                    case LEAVE:
                         Integer slotNum = scanner.nextInt();
                         clientService.leaveSlot(slotNum);
                         break;
 
-                    case status:
+                    case STATUS:
                         clientService.printStatus();
                         break;
 
-                    case registration_numbers_for_cars_with_colour:
+                    case REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR:
                         clientService.printRegistrationNumbers(scanner.next());
                         break;
 
-                    case slot_numbers_for_cars_with_colour:
+                    case SLOT_NUMBERS_FOR_CARS_WITH_COLOUR:
                         clientService.printSlotNumbersForColor(scanner.next());
                         break;
 
-                    case slot_number_for_registration_number:
+                    case SLOT_NUMBER_FOR_REGISTRATION_NUMBER:
                         clientService.printSlotNumbersForRegNumber(scanner.next());
                         break;
 
-                    case exit:
+                    case EXIT:
                         exit = true;
                         break;
 

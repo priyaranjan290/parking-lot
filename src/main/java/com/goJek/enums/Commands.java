@@ -2,13 +2,13 @@ package com.goJek.enums;
 
 public enum Commands {
 
-    create_parking_lot,
-    park,
-    leave,
-    status,
-    registration_numbers_for_cars_with_colour,
-    slot_numbers_for_cars_with_colour,
-    slot_number_for_registration_number,
-    exit
+    CREATE_PARKING_LOT,
+    PARK,
+    LEAVE,
+    STATUS,
+    REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR,
+    SLOT_NUMBERS_FOR_CARS_WITH_COLOUR,
+    SLOT_NUMBER_FOR_REGISTRATION_NUMBER,
+    EXIT
 
 }
