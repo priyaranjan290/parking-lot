@@ -1,6 +1,7 @@
 package com.goJek;
 
 import com.goJek.enums.Commands;
+import com.goJek.exception.ParkingException;
 import com.goJek.service.ClientService;
 import com.goJek.service.ClientServiceImpl;
 
@@ -12,6 +13,10 @@ public class Application {
 
     private static final String UNSUPPORTED_COMMAND = "Unsupported Command!!";
 
+
+    /**
+     * entry point of he code
+     * */
     public static void main(String[] args) {
 
         Scanner scanner = null;
@@ -35,6 +40,12 @@ public class Application {
 
     }
 
+
+    /**
+     *
+     * method to read and parse input and take appropriate action
+     *
+     * */
     private static void readAndProcessInput(Scanner scanner) {
 
         boolean exit = false;
@@ -86,7 +97,7 @@ public class Application {
                         break;
 
                     default:
-                        throw new Exception(UNSUPPORTED_COMMAND);
+                        throw new ParkingException(UNSUPPORTED_COMMAND);
 
                 }
             } catch (IllegalArgumentException e) {
